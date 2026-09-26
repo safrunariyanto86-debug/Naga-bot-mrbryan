@@ -3,10 +3,10 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("🐉 NAGA BOT MR BRYAN AKTIF BOSKU! 🔥")
+    await update.message.reply_text("🐉 NAGA GACOR MR BRYAN AKTIF BOS! Ketik /gacor")
 
 async def gacor(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("🔥 JAM GACOR: 20:00 - 02:00 WIB BOS!")
+    await update.message.reply_text("🔥 JAM GACOR: 22:00 - 02:00 WIB")
 
 def main():
     token = os.getenv("BOT_TOKEN")
