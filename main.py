@@ -96,8 +96,19 @@ CA: {config['ca']}
 async def start(update, context): await update.message.reply_text(f"🐉 OTAK VV SESUAI VOICE AKTIF!\nWallet: {bot_wallet.pubkey()}\nCA: {config['ca']}\nKonsep: 0.02 SOL -> 40% BURN, 40% LP, 20% BRANGKAS")
 async def setca(update, context): config['ca']=context.args[0]; save_config(config); await update.message.reply_text(f"CA SET {config['ca']}")
 async def setvault(update, context): config['vault']=context.args[0]; save_config(config); await update.message.reply_text(f"VAULT SET {config['vault']}")
-async def cekburn(update, context): await update.message.reply_text(f"BURN {config['total_burned']}/{config['target_burn']}")
 
+async def cekburn(update, context):
+    burn = config['total_burned']
+    target = config['target_burn']
+    supply = config.get('supply', 1000000)
+    sisa = supply - burn
+    persen = (burn / target * 100) if target > 0 else 0
+    ca = config['ca'] if config['ca'] else "Belum set"
+    vault = config['vault'] if config['vault'] else "Belum set"
+    wallet = str(bot_wallet.pubkey())
+    await update.message.reply_text(
+        f"📊 REAL BURN\n🔥 {burn} / {target} ({persen:.2f}%)\n📦 Sisa Supply: {sisa}\nCA: {ca}\nVault: {vault}\nWallet: {wallet}\n\nBURN {burn}/{target}"
+    )
 def main():
     app = Application.builder().token(BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", start))
